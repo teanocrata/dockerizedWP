@@ -1,6 +1,6 @@
 version: '2'
 services:
-  db:
+  learn_db:
     image: mysql:5.7
     volumes:
       - learn_db_data:/var/lib/mysql
@@ -10,8 +10,6 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
-    networks:
-      - ILICEReverseProxy
 
   learn:
     depends_on:
@@ -30,15 +28,9 @@ services:
      WORDPRESS_DB_HOST: db:3306
      WORDPRESS_DB_USER: wordpress
      WORDPRESS_DB_PASSWORD: wordpress
-    networks:
-      - ILICEReverseProxy
 
 volumes:
    learn_db_data:
    learn_wp_folder:
    aula_learn_db_data:
    aula_learn_wp_folder:
-
-networks:
-  ILICEReverseProxy:
-    external: true
