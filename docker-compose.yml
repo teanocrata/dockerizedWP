@@ -21,6 +21,8 @@ services:
     restart: always
     expose:
       - '80'
+    ports:
+      - '8001:80'
     volumes:
       - learn_wp_folder:/var/www/html
       - ./.htaccess:/var/www/html/.htaccess
