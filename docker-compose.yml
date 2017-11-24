@@ -1,6 +1,6 @@
 version: '2'
 services:
-  learn_db:
+  db:
     image: mysql:5.7
     volumes:
       - learn_db_data:/var/lib/mysql
