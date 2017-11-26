@@ -1,21 +1,21 @@
 version: '2'
 services:
-  db:
+  learndb:
     image: mysql:5.7
     volumes:
       - learn_db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: somewordpresslearn
+      MYSQL_DATABASE: wordpresslearn
+      MYSQL_USER: wordpresslearn
+      MYSQL_PASSWORD: wordpresslearn
     networks:
       - ILICEReverseProxy
 
   learn:
     depends_on:
-      - db
+      - learndb
     image: wordpress:latest
     container_name: learn
     restart: always
@@ -27,9 +27,9 @@ services:
       - learn_wp_folder:/var/www/html
       - ./.htaccess:/var/www/html/.htaccess
     environment:
-     WORDPRESS_DB_HOST: db:3306
-     WORDPRESS_DB_USER: wordpress
-     WORDPRESS_DB_PASSWORD: wordpress
+     WORDPRESS_DB_HOST: learndb:3306
+     WORDPRESS_DB_USER: wordpresslearn
+     WORDPRESS_DB_PASSWORD: wordpresslearn
     networks:
      - ILICEReverseProxy
 
