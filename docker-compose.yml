@@ -23,7 +23,7 @@ services:
       - cognitiowp_wp_folder:/var/www/html
       - ./.htaccess:/var/www/html/.htaccess
     environment:
-     WORDPRESS_DB_HOST: learndb:3306
+     WORDPRESS_DB_HOST: cognitiodb:3306
     env_file:
       - .env
     networks:
