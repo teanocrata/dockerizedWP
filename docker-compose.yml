@@ -1,43 +1,55 @@
 version: '2'
 services:
-  learndb:
+  cognitiodb:
     image: mysql:5.7
+    container_name: cognitiodb
     volumes:
-      - learn_db_data:/var/lib/mysql
+      - cognitiodb_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE
+      MYSQL_USER
+      MYSQL_PASSWORD
     networks:
       - ILICEReverseProxy
 
-  learn:
+  cognitiowp:
+    image: wordpress:php7.0
     depends_on:
-      - learndb
-    image: wordpress:latest
-    container_name: learn
+      - cognitiodb
+    container_name: cognitiowp
     restart: always
     expose:
       - '80'
     ports:
       - '8001:80'
     volumes:
-      - learn_wp_folder:/var/www/html
+      - cognitiowp_wp_folder:/var/www/html
       - ./.htaccess:/var/www/html/.htaccess
     environment:
      WORDPRESS_DB_HOST: learndb:3306
-     WORDPRESS_DB_USER: wordpress
-     WORDPRESS_DB_PASSWORD: wordpress
+     WORDPRESS_DB_USER
+     WORDPRESS_DB_PASSWORD
     networks:
      - ILICEReverseProxy
 
+  cognitiomyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - cognitiodb:db
+    ports:
+      - '8001:80'
+    expose:
+      - '80'
+    depends_on:
+      - cognitiodb
+    networks:
+      - ILICEReverseProxy
+
 volumes:
-   learn_db_data:
-   learn_wp_folder:
-   aula_learn_db_data:
-   aula_learn_wp_folder:
+   cognitiodb_data:
+   cognitiowp_wp_folder:
 
 networks:
   ILICEReverseProxy:
